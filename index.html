@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="cusplibrary.github.com : Website for CUSP library" />
+    <meta name="description" content="cusplibrary.github.com : CUSP : A C++ Templated Sparse Matrix Library" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/cusplibrary">View on GitHub</a>
 
           <h1 id="project_title">cusplibrary.github.com</h1>
-          <h2 id="project_tagline">Website for CUSP library</h2>
+          <h2 id="project_tagline">CUSP : A C++ Templated Sparse Matrix Library</h2>
 
         </header>
     </div>
@@ -27,32 +27,50 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <p><img src="https://raw.github.com/cusplibrary/cusplibrary/master/media/cusp_logo.png" alt="CUSP"></p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Cusp is a library for sparse linear algebra and graph computations on CUDA. Cusp provides a flexible, high-level interface for manipulating sparse matrices and solving sparse linear systems. Get Started with Cusp today!</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>News</h2>
+
+<p>Cusp v0.3.0 has been released with support for CUDA 4.1. See CHANGELOG for release information.</p>
+
+<p>Cusp v0.2.0 has been released! See CHANGELOG for release information.</p>
+
+<p>Cusp v0.1.2 has been released! v0.1.2 contains compatibility fixes for Thrust v1.3.0.</p>
+
+<p>Cusp v0.1.1 has been released! v0.1.1 contains compatibility fixes for CUDA 3.1.</p>
+
+<p>Cusp v0.1.0 has been released!.</p>
+
+<p>Added QuickStartGuide page.</p>
+
+<h1>Examples</h1>
+
+<p>The following example loads a matrix from disk, transparently converts the matrix to the highly-efficient HYB format, and transfers the matrix to the GPU device. The linear system A*x = b is them solved on the device using the Conjugate Gradient method. A more detailed version of this example is also <a href="https://github.com/cusplibrary/cusplibrary/blob/master/examples/Solvers/cg.cu">available</a>.</p>
+
+<pre><code>#include &lt;cusp/hyb_matrix.h&gt;
+#include &lt;cusp/io/matrix_market.h&gt;
+#include &lt;cusp/krylov/cg.h&gt;
+
+int main(void)
+{
+    // create an empty sparse matrix structure (HYB format)
+    cusp::hyb_matrix&lt;int, float, cusp::device_memory&gt; A;
+
+    // load a matrix stored in MatrixMarket format
+    cusp::io::read_matrix_market_file(A, "5pt_10x10.mtx");
+
+    // allocate storage for solution (x) and right hand side (b)
+    cusp::array1d&lt;float, cusp::device_memory&gt; x(A.num_rows, 0);
+    cusp::array1d&lt;float, cusp::device_memory&gt; b(A.num_rows, 1);
+
+    // solve the linear system A * x = b with the Conjugate Gradient method
+    cusp::krylov::cg(A, x, b);
+
+    return 0;
+}
 </code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
     </div>
 
